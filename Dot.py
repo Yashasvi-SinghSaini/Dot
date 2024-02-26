@@ -30,7 +30,7 @@ def button_func():
             CTkLabel(master=frame_1, text="Enter Doubt!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
     else:
         CTkLabel(master=frame_1, text="Enter Chapter!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
-    
+    Doubt.delete(0, len(Doubt.get()))
     playsound.playsound('Assets/sound/click.wav')
 
 def resolved_button_func():
