@@ -1,0 +1,75 @@
+from customtkinter import *
+import playsound
+import datetime
+import pandas
+from Scripts import funcs
+from PIL import Image
+
+app = CTk()
+app.geometry("1200x400")
+app.wm_title("Dot")
+app.iconbitmap("Assets/icon/Dot_Icon.ico")
+app._set_appearance_mode('light')
+set_default_color_theme("blue")
+
+
+
+def button_func():
+    if Chapter.get() != '':
+        if Doubt.get() != '':
+            csv_old=pandas.read_csv('Assets/data/data.csv')
+            data={"Date":[datetime.date.today()],
+                "Chapter":[Chapter.get()],
+                "Doubt":[Doubt.get()],
+                "Resolved": [0]} 
+            csv_new=pandas.DataFrame(data)
+            csv_combined = pandas.concat([csv_old, csv_new])
+            csv_combined.to_csv('Assets/data/data.csv', index=False)
+            csv_combined = pandas.read_csv('Assets/data/data.csv')
+        else:
+            CTkLabel(master=frame_1, text="Enter Doubt!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
+    else:
+        CTkLabel(master=frame_1, text="Enter Chapter!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
+    
+    playsound.playsound('Assets/sound/click.wav')
+
+def resolved_button_func():
+    for i in range(len(csv.index)):
+        if csv['Date'][i] == str(funcs.daychange(0)) or csv['Date'][i] == str(funcs.daychange(-1)) or csv['Date'][i] == str(funcs.daychange(-2)) or csv['Date'][i] == str(funcs.daychange(-3)) or csv['Date'][i] == str(funcs.daychange(-4)) or csv['Date'][i] == str(funcs.daychange(-5)) or csv['Date'][i] == str(funcs.daychange(-6)):
+            csv.loc[i, 'Resolved'] = [1]
+            csv.to_csv('Assets/data/data.csv', index=False)
+    playsound.playsound('Assets/sound/click.wav')
+
+csv= pandas.read_csv('Assets/Data/data.csv')
+
+
+
+
+frame_1 = CTkFrame(master=app, fg_color="#CB7DE3", border_width=5, corner_radius=50)
+frame_1.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=50, pady=50)
+
+study_head = CTkLabel(master=frame_1, text='DOUBTS? ENTER HERE!!!', text_color='#35173E', font=("Cascadia Mono SemiBold", 25), justify="center")
+Chapter = CTkEntry(master=frame_1, placeholder_text="Chapter?",text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8", placeholder_text_color='#FFFFFF')
+Doubt = CTkEntry(master=frame_1, placeholder_text="What's the doubt",text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8", placeholder_text_color='#FFFFFF')
+button = CTkButton(master=frame_1, text="Add", command=button_func, font=("Cascadia Mono", 15), fg_color='#8524A3', text_color='#FFFFFF', hover_color='#4B145C')
+
+study_head.pack(expand=True, pady=(30, 15), padx= 20)
+Chapter.pack(expand=True, pady=15, padx=20)
+Doubt.pack(expand=True, pady=15, padx=20)
+button.pack(expand=True, fill="both", pady=(30, 15), padx=30)
+
+
+
+frame_2 = CTkFrame(master=app, fg_color="#E090C6", border_width=5, corner_radius=50)
+frame_2.grid(row=0, column=2, rowspan=3)
+
+CTkLabel(master=frame_2, text="CLEAR THESE DOUBTS QUICKLY!!!", text_color='#C93F9D', font=("Cascadia Mono SemiBold", 25), justify="center").pack(expand=True, pady=15, padx=20)
+
+
+for i in range(len(csv.index)):
+    if csv['Date'][i] == str(funcs.daychange(0)) or csv['Date'][i] == str(funcs.daychange(-1)) or csv['Date'][i] == str(funcs.daychange(-2)) or csv['Date'][i] == str(funcs.daychange(-3)) or csv['Date'][i] == str(funcs.daychange(-4)) or csv['Date'][i] == str(funcs.daychange(-5)) or csv['Date'][i] == str(funcs.daychange(-6)):
+        if csv['Resolved'][i]==0:
+            doubt_check = CTkLabel(master=frame_2, text=f'{csv['Chapter'][i]} ⇛ {csv['Doubt'][i]}', text_color='#5E224B',font=("Cascadia Mono", 20))
+            doubt_check.pack(expand=True, pady=2, padx=5)
+resolved_button = CTkButton(master=frame_2, text="Resolved", command=resolved_button_func, font=("Cascadia Mono", 15), fg_color='#7F2462', hover_color='#3E173D').pack(expand=True, padx=5, pady=[0,10])
+app.mainloop()
