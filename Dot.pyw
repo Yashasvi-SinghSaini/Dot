@@ -11,7 +11,7 @@ app.wm_title("Dot")
 app.iconbitmap("Assets/icon/Dot_Icon.ico")
 app._set_appearance_mode('light')
 set_default_color_theme("blue")
-
+btn_img = Image.open('Assets/Images/Dot_black.png')
 
 
 def button_func():
@@ -30,7 +30,7 @@ def button_func():
             CTkLabel(master=frame_1, text="Enter Doubt!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
     else:
         CTkLabel(master=frame_1, text="Enter Chapter!!!", text_color='#b52309', font=('Commissioner', 17)).pack(pady=[0,10])
-    
+    Doubt.delete(0, len(Doubt.get()))
     playsound.playsound('Assets/sound/click.wav')
 
 def resolved_button_func():
@@ -49,9 +49,9 @@ frame_1 = CTkFrame(master=app, fg_color="#CB7DE3", border_width=5, corner_radius
 frame_1.grid(row=0, column=0, rowspan=3, sticky="nsew", padx=50, pady=50)
 
 study_head = CTkLabel(master=frame_1, text='DOUBTS? ENTER HERE!!!', text_color='#35173E', font=("Cascadia Mono SemiBold", 25), justify="center")
-Chapter = CTkEntry(master=frame_1, placeholder_text="Chapter?",text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8", placeholder_text_color='#FFFFFF')
-Doubt = CTkEntry(master=frame_1, placeholder_text="What's the doubt",text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8", placeholder_text_color='#FFFFFF')
-button = CTkButton(master=frame_1, text="Add", command=button_func, font=("Cascadia Mono", 15), fg_color='#8524A3', text_color='#FFFFFF', hover_color='#4B145C')
+Chapter = CTkEntry(master=frame_1, placeholder_text="Chapter?",text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8")
+Doubt = CTkTextbox(master=frame_1,text_color='#FFFFFF', width=400, font=("Cascadia Mono", 15), fg_color="#9628B8", height=100)
+button = CTkButton(master=frame_1, text="ADD", command=button_func, font=("Cascadia Mono", 15), fg_color='#8524A3', text_color='#FFFFFF', hover_color='#4B145C', image = CTkImage(light_image=btn_img, dark_image=btn_img))
 
 study_head.pack(expand=True, pady=(30, 15), padx= 20)
 Chapter.pack(expand=True, pady=15, padx=20)
