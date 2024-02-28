@@ -6,7 +6,7 @@ from Scripts import funcs, shorten_doubt
 from PIL import Image
 
 app = CTk()
-app.geometry("1300x400")
+app.geometry("1300x500")
 app.wm_title("Dot")
 app.iconbitmap("Assets/icon/Dot_Icon.ico")
 app._set_appearance_mode('light')
