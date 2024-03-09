@@ -65,15 +65,16 @@ frame_2.grid(row=0, column=1, pady=2, padx=5)
 
 CTkLabel(master=frame_2, text="CLEAR THESE DOUBTS QUICKLY!!!", text_color='#C93F9D', font=("Cascadia Mono SemiBold", 25), justify="center").pack(expand=True, pady=5, padx=20)
 
-
+dot_displayed=False
 for i in range(len(csv.index)):
     if csv['Date'][i] == str(funcs.daychange(0)) or csv['Date'][i] == str(funcs.daychange(-1)) or csv['Date'][i] == str(funcs.daychange(-2)) or csv['Date'][i] == str(funcs.daychange(-3)) or csv['Date'][i] == str(funcs.daychange(-4)) or csv['Date'][i] == str(funcs.daychange(-5)) or csv['Date'][i] == str(funcs.daychange(-6)):
         if csv['Resolved'][i]==0:
             doubt = shorten_doubt.shorten_doubt(csv['Doubt'][i])
             doubt_check = CTkLabel(master=frame_2, text=f'➧{csv['Chapter'][i]} ⇛ {doubt}', text_color='#5E224B',font=("Cascadia Mono", 20))
             doubt_check.pack(expand=True, pady=5, padx=5)
-        else:
-            doubt_check = CTkLabel(master=frame_2, text='NO DOUBTS LEFT UNRESOLVED', text_color='#5E224B',font=("Cascadia Mono", 20))
-            doubt_check.pack(expand=True, pady=5, padx=5)
+            dot_displayed = True
+if dot_displayed == False:
+    doubt_check = CTkLabel(master=frame_2, text='NO DOUBTS LEFT UNRESOLVED', text_color='#5E224B',font=("Cascadia Mono", 20))
+    doubt_check.pack(expand=True, pady=5, padx=5)
 resolved_button = CTkButton(master=frame_2, text="Resolved", command=resolved_button_func, font=("Cascadia Mono", 15), fg_color='#7F2462', hover_color='#3E173D').pack(expand=True, padx=5, pady=[5,0])
 app.mainloop()
