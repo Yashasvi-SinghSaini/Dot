@@ -1,5 +1,5 @@
 from customtkinter import *
-import playsound
+from playsound3 import playsound
 import datetime
 import pandas
 from Scripts import funcs, shorten_doubt
